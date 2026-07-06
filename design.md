@@ -130,6 +130,10 @@ Two density modes. Same tokens, different rhythm.
 - Tables: hairline row dividers only (no vertical rules), `elevated` header row with mono uppercase labels, numeric columns right-aligned in mono, row hover shifts the background one step.
 - Admin UIs ship both themes and follow system preference.
 
+### Media / Browse (streaming apps, galleries, anything artwork-led)
+
+Chrome follows the system: nav, buttons, text, dialogs, settings, and player controls use the tokens, one accent, monochrome surfaces, and the motion rules. But the content layer is image-first, poster grids, hero backdrops, episode stills, and that is correct for the medium, not an exception to "lists over cards." The artwork is the interface; the system's restraint lives in the chrome around it. Keep the quiet: one accent, hairline structure, no ambient glows behind the art.
+
 ## Core components
 
 Behavioral rules, not a component library. Any implementation that follows these is on-system.
