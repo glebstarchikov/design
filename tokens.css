@@ -1,0 +1,94 @@
+/* theme: gleb (default), from glebstar/design v2026-07-06
+   Reference token implementation for Tailwind CSS v4.
+   Usage: import after tailwindcss in the project's main CSS file.
+   Dark mode: set data-theme="dark" on <html>. Light-only projects can
+   delete the dark block and the @custom-variant line. */
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  color-scheme: light;
+
+  --bg: #fcfcfb;
+  --elevated: #ffffff;
+  --fg: #17161a;
+  --secondary: #605f6a;
+  --faint: #6f6e79;
+  --border: #e9e8e4;
+  --border-strong: #dcdbd6;
+  --accent: #4b46f5;
+  --accent-soft: #edecfe;
+  --success: #1a7a4d;
+  --warning: #96660a;
+  --danger: #c02f2f;
+
+  /* Motion (see design.md "Motion"; springs live in JS: stiffness 460, damping 34) */
+  --duration-micro: 150ms;
+  --duration-small: 180ms;
+  --duration-reveal: 700ms;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #131215;
+  --elevated: #1c1b1f;
+  --fg: #ececea;
+  --secondary: #a7a6b0;
+  --faint: #908f99;
+  --border: #2a292e;
+  --border-strong: #38373d;
+  --accent: #8a86ff;
+  --accent-soft: #232244;
+  --success: #53b483;
+  --warning: #d4a72c;
+  --danger: #ef7066;
+}
+
+@theme inline {
+  /* Reset Tailwind's default palette: semantic tokens only (hard rule 2).
+     Utilities: bg-bg, bg-elevated, text-fg, text-secondary, text-faint,
+     border-border, border-border-strong, text-accent, bg-accent-soft,
+     text-success, text-warning, text-danger, bg-danger, etc. */
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-elevated: var(--elevated);
+  --color-fg: var(--fg);
+  --color-secondary: var(--secondary);
+  --color-faint: var(--faint);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+}
+
+@theme {
+  /* Fonts: install the `geist` npm package (or Fontsource) per project */
+  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  /* Type scale: 12 / 14 / 16 / 18 / 20 / 26 / 30. Display caps at 30px. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.625rem;
+  --text-3xl: 1.875rem;
+
+  /* Radius: sm controls, md panels/menus, lg modals */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+
+  /* The only shadow in the system (light-mode modals) */
+  --shadow-modal: 0 16px 40px rgb(0 0 0 / 0.08);
+
+  /* Easing for reveals */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
