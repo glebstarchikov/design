@@ -117,7 +117,8 @@ crafted element is on-brand; decoration sprinkled everywhere is not.
 
 - **Bio:** `Founder and solo builder. AI apps, dev tools, and the systems around them.`
 - **Pinned repos (6):** design, Launchpad, codex-check, claude-widget, good-eye, noter.
-- Blog link already set to `glebstarchikov.nl`. Location optional, Gleb's call.
+- **Location:** `Netherlands`.
+- Blog link already set to `glebstarchikov.nl`.
 
 ## 2. Repo README template (keepers)
 
@@ -166,7 +167,7 @@ public once live):
 | **Homepage** | Live demo URL where one exists, else `https://glebstarchikov.nl`. |
 | **Features** | Issues **on**; Wiki, Projects, Discussions **off** unless actively used. |
 | **Security** | Dependabot alerts **on**. |
-| **Social preview** | One on-brand OG image template (Crafted Minimal wordmark + repo name), set per repo. |
+| **Social preview** | One on-brand OG image template (Crafted Minimal wordmark + repo name), generated per repo and set as the repo social preview. In the main pass. |
 | **Default branch** | `main` everywhere. |
 
 ## 4. Make-public procedure (gated)
@@ -218,9 +219,9 @@ feature toggles, Dependabot) so they run consistently across repos.
   is an MCP tool that may hold API keys or scraped data in history; scan hard.
 - **SVG font rendering** on GitHub — mitigated by outlining type to paths;
   verify by eye in both themes.
-- **Social preview images** need a small generator or template; if that balloons,
-  it can ship in a fast follow rather than block the rest.
-- Location field left to Gleb.
+- **Social preview images** need a small generator or template (SVG → 1280×640
+  PNG, set via GitHub's social-preview upload). In the main pass; the generator
+  is the one net-new build here, so budget for it.
 
 ## 8. Verification
 
