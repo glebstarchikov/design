@@ -1,0 +1,52 @@
+<!doctype html>
+<html data-theme="__THEME__">
+<head>
+<meta charset="utf-8" />
+<style>
+__FONT_FACES__
+
+:root {
+  __TOKEN_VARS__
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 1600px;
+  height: 400px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  padding-left: 96px;
+  font-family: "Geist Sans", sans-serif;
+}
+
+.wordmark {
+  font-size: 72px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.caret {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: 400;
+  margin-left: 6px;
+}
+</style>
+</head>
+<body>
+  <div class="wordmark">Gleb Starchikov<span class="caret">&#9612;</span></div>
+</body>
+</html>

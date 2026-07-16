@@ -1,0 +1,15 @@
+{
+  "name": "brand-assets",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "playwright": "^1.61.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "geist": "^1.7.2"
+  }
+}
