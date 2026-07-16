@@ -16,11 +16,11 @@
 - **No em-dashes** in any copy. Restructure with commas, periods, colons.
 - License on all keepers: MIT.
 - Default branch everywhere: `main`.
-- Keeper repos: `design`, `Launchpad`, `codex-check`, `noter`, `rag-workshop`, `claude-widget`, `good-eye` (the last two after they go public).
+- Keeper repos (full README + metadata baseline, 7): `design`, `Launchpad`, `codex-check`, `rag-workshop`, `claude-widget`, `good-eye`, `rusty-noter` (the last three after they go public). `codex-check` is a polished keeper but NOT featured.
 - `personal-website` (v1): publish → reference README → archive.
-- Archive: `pace-pal-for-you`, `craft-your-signature-online`, `UOL-project`.
-- Untouched: `nova-for-b`. Stay private: `glebstarchikov.nl`, `coffee-site`, `tambov-cheese-craft`, `gustaf`, `gustaf-grand-network`, `gustaf-dashboard`.
-- Pins (6): `design`, `Launchpad`, `codex-check`, `claude-widget`, `good-eye`, `noter`.
+- Archive: `pace-pal-for-you`, `craft-your-signature-online`, `UOL-project`, and `noter` (superseded by `rusty-noter`; repoint its description, keep its README).
+- Untouched: `nova-for-b`. Stay private: `glebstarchikov.nl`, `coffee-site`, `a-hotel`, `tambov-cheese-craft`, `gustaf`, `gustaf-grand-network`, `gustaf-dashboard`.
+- Pins (6): `design`, `Launchpad`, `rusty-noter`, `claude-widget`, `good-eye`, `rag-workshop`.
 - Owner/handle: `glebstarchikov`. Email: `glebstar06@gmail.com`. Site: `https://glebstarchikov.nl`.
 - **Publishing is irreversible.** No repo goes public until its full git history passes the secret scan (Task 1).
 
@@ -38,7 +38,7 @@
 
 ### Task 1: Secret-scan gate for the make-public candidates
 
-**Repos:** `claude-widget`, `good-eye`, `personal-website`. Nothing goes public until this passes.
+**Repos:** `claude-widget`, `good-eye`, `personal-website`, `rusty-noter`. Nothing goes public until this passes. `rusty-noter` is an actively-developed Swift app; scan especially for signing secrets and API keys.
 
 **Files:**
 - Local clones under a scratch dir, e.g. `/private/tmp/claude-501/.../scratchpad/scan/`.
@@ -55,7 +55,7 @@ Expected: a version string.
 
 ```bash
 mkdir -p "$SCAN" && cd "$SCAN"
-for r in claude-widget good-eye personal-website; do
+for r in claude-widget good-eye personal-website rusty-noter; do
   gh repo clone glebstarchikov/$r -- --no-single-branch
 done
 ```
@@ -64,13 +64,13 @@ Expected: three clones, each with full `.git` history.
 - [ ] **Step 3: Scan full history of each repo**
 
 ```bash
-for r in claude-widget good-eye personal-website; do
+for r in claude-widget good-eye personal-website rusty-noter; do
   echo "=== $r ==="; gitleaks detect --source "$SCAN/$r" --no-banner --redact -v || true
 done
 ```
 Also grep history for stray env files:
 ```bash
-for r in claude-widget good-eye personal-website; do
+for r in claude-widget good-eye personal-website rusty-noter; do
   git -C "$SCAN/$r" log --all --name-only --pretty=format: | sort -u | grep -Ei '\.env|secret|credential|\.pem|serviceRole' || echo "$r: no suspicious paths"
 done
 ```
@@ -246,10 +246,10 @@ Restraint over decoration.
 
 - **[design](https://github.com/glebstarchikov/design)** — the unified design system behind everything I ship
 - **[Launchpad](https://github.com/glebstarchikov/Launchpad)** — self-hosted founder command center · Bun · Hono · React · SQLite
-- **[codex-check](https://github.com/glebstarchikov/codex-check)** — Claude Code plugin for automatic second-opinion review
+- **[rusty-noter](https://github.com/glebstarchikov/rusty-noter)** — native macOS notes with a local markdown vault, agent-native
 - **[claude-widget](https://github.com/glebstarchikov/claude-widget)** — the Claude Code critter, living in your Mac menu bar
 - **[good-eye](https://github.com/glebstarchikov/good-eye)** — a searchable design-inspiration database for Claude, via MCP
-- **[noter](https://github.com/glebstarchikov/noter)** — real-time transcription plus AI-structured notes
+- **[rag-workshop](https://github.com/glebstarchikov/rag-workshop)** — a notebook that teaches RAG to non-technical people
 
 ### Elsewhere
 
@@ -282,8 +282,8 @@ Expected: bio and `Netherlands` echoed back.
 
 Pinning is not in `gh` core; use the GraphQL mutation. First get repo node IDs, then pin.
 ```bash
-for r in design Launchpad codex-check claude-widget good-eye noter; do
-  gh api repos/glebstarchikov/$r --jq '.node_id'; done   # collect IDs (claude-widget/good-eye must be public first)
+for r in design Launchpad rusty-noter claude-widget good-eye rag-workshop; do
+  gh api repos/glebstarchikov/$r --jq '.node_id'; done   # collect IDs (newly-public repos must be public first)
 ```
 Then:
 ```bash
@@ -301,7 +301,7 @@ Expected: profile shows exactly those 6 pinned. (Run this step after Task 4 so a
 - [ ] **Step 1: Flip each CLEAN repo to public**
 
 ```bash
-for r in claude-widget good-eye personal-website; do
+for r in claude-widget good-eye personal-website rusty-noter; do
   gh repo edit glebstarchikov/$r --visibility public --accept-visibility-change-consequences
 done
 ```
@@ -310,7 +310,7 @@ Expected: no error; each now public.
 - [ ] **Step 2: Verify**
 
 ```bash
-for r in claude-widget good-eye personal-website; do
+for r in claude-widget good-eye personal-website rusty-noter; do
   gh repo view glebstarchikov/$r --json isPrivate --jq '"\(.name // "'"$r"'") private=\(.isPrivate)"'; done
 ```
 Expected: `private=false` for each. If any was DIRTY in Task 1, it is absent here — do not flip it.
@@ -319,12 +319,12 @@ Expected: `private=false` for each. If any was DIRTY in Task 1, it is absent her
 
 ### Task 5: README + metadata baseline for each keeper
 
-Applies to all 8 keepers: `design`, `Launchpad`, `codex-check`, `noter`, `rag-workshop`, `claude-widget`, `good-eye`, and `personal-website` gets the *reference* variant (Task 7). Do the 7 active keepers here.
+Applies to all 7 keepers: `design`, `Launchpad`, `codex-check`, `rag-workshop`, `claude-widget`, `good-eye`, `rusty-noter`. (`personal-website` gets the *reference* variant and old `noter` gets archived, both in Task 7.)
 
 **Interfaces:**
 - Consumes: repos public (Task 4). Produces: consistent README + metadata per repo.
 
-Per repo, repeat Steps 1–5. README bodies for repos with existing good content (`Launchpad`, `codex-check`, `noter`) only need the shared footer + metadata added; for the rest, author from the template by reading the repo.
+Per repo, repeat Steps 1–5. README bodies for repos with existing good content (`Launchpad`, `codex-check`) only need the shared footer + metadata added; for the rest, author from the template by reading the repo.
 
 - [ ] **Step 1: Read the repo to source accurate README content**
 
@@ -332,7 +332,7 @@ Per repo, repeat Steps 1–5. README bodies for repos with existing good content
 gh repo clone glebstarchikov/<repo> -- --depth 1 2>/dev/null; cd <repo>
 cat package.json 2>/dev/null; ls   # derive stack + run commands
 ```
-For `design`: content-only (no run section). For `rag-workshop`: notebook, no run section, note MIT + audience. For `claude-widget`: Swift/macOS, build via Xcode. For `good-eye`: TS MCP server, note how to run the MCP.
+For `design`: content-only (no run section). For `rag-workshop`: notebook, no run section, note MIT + audience. For `claude-widget`: Swift/macOS, build via Xcode. For `good-eye`: TS MCP server, note how to run the MCP. For `rusty-noter`: native macOS app (Swift, XcodeGen `project.yml`), local markdown vault, agent-native; build via `xcodegen` + Xcode. This is the flagship, give it the strongest README of the set.
 
 - [ ] **Step 2: Write `README.md` from the shared template**
 
@@ -364,7 +364,7 @@ The trailing footer line is byte-identical across every keeper.
 
 - [ ] **Step 3: Add MIT LICENSE where missing**
 
-`design`, `claude-widget`, `good-eye` need a license file if absent.
+`design`, `claude-widget`, `good-eye`, `rusty-noter` need a license file if absent.
 ```bash
 test -f LICENSE || gh api /licenses/mit --jq '.body' \
   | sed "s/\[year\]/2026/; s/\[fullname\]/Gleb Starchikov/" > LICENSE
@@ -392,10 +392,10 @@ Suggested topics per repo (tech + one category):
 - `design`: `design-system`, `css`, `design-tokens`
 - `Launchpad`: keep existing (already good)
 - `codex-check`: keep existing (already good)
-- `noter`: `nextjs`, `supabase`, `ai`
 - `rag-workshop`: `rag`, `jupyter`, `education`
 - `claude-widget`: `swift`, `macos`, `claude-code`
 - `good-eye`: `mcp-server`, `typescript`, `design`
+- `rusty-noter`: `swift`, `macos`, `ai`, `notes`
 
 - [ ] **Step 6: Enable Dependabot alerts**
 
@@ -426,7 +426,7 @@ cd ~/design/scripts/brand-assets
 bun generate.ts social --name design --tagline "The unified design system for everything I ship"
 bun generate.ts social --name Launchpad --tagline "Self-hosted founder command center"
 bun generate.ts social --name codex-check --tagline "Second-opinion code review for Claude Code"
-bun generate.ts social --name noter --tagline "Real-time transcription plus AI-structured notes"
+bun generate.ts social --name rusty-noter --tagline "Native macOS notes, local markdown vault, agent-native"
 bun generate.ts social --name rag-workshop --tagline "Teach RAG to non-technical people"
 bun generate.ts social --name claude-widget --tagline "The Claude Code critter in your menu bar"
 bun generate.ts social --name good-eye --tagline "A design-inspiration database for Claude, via MCP"
@@ -437,14 +437,14 @@ Expected: seven `out/social-*.png`.
 
 GitHub has no REST endpoint for social preview upload; it is a web-UI action (Settings → Social preview → Upload). For each repo, open Settings and upload the matching `out/social-<repo>.png`.
 ```bash
-for r in design Launchpad codex-check noter rag-workshop claude-widget good-eye; do
+for r in design Launchpad codex-check rusty-noter rag-workshop claude-widget good-eye; do
   echo "Upload out/social-$r.png at: https://github.com/glebstarchikov/$r/settings"; done
 ```
 Expected: each repo's social card shows the on-brand image (verify by pasting a repo URL into a preview, or reload Settings).
 
 ---
 
-### Task 7: Reference README + archive `personal-website`; archive the throwaways
+### Task 7: Archive `personal-website`, `noter`, and the throwaways
 
 - [ ] **Step 1: Reference README for `personal-website`**
 
@@ -484,13 +484,22 @@ gh repo archive glebstarchikov/<repo> --yes
 (For `pace-pal-for-you` and `craft-your-signature-online`, which have live Lovable URLs, keep the existing homepage; optionally add "Built with Lovable." to the line.)
 Expected: all three archived.
 
-- [ ] **Step 3: Verify archive state**
+- [ ] **Step 3: Repoint and archive old `noter`**
+
+`noter` is a real predecessor, not a throwaway. Keep its existing README, just repoint its description at the successor and archive.
+```bash
+gh repo edit glebstarchikov/noter --description "Previous web version of noter (Next.js + Supabase + Deepgram). Succeeded by rusty-noter, the native macOS app." --homepage "https://github.com/glebstarchikov/rusty-noter"
+gh repo archive glebstarchikov/noter --yes
+```
+Expected: `noter` archived, description points at `rusty-noter`.
+
+- [ ] **Step 4: Verify archive state**
 
 ```bash
-for r in personal-website pace-pal-for-you craft-your-signature-online UOL-project; do
+for r in personal-website noter pace-pal-for-you craft-your-signature-online UOL-project; do
   gh repo view glebstarchikov/$r --json isArchived --jq '"'"$r"' archived=\(.isArchived)"'; done
 ```
-Expected: `archived=true` for all four.
+Expected: `archived=true` for all five.
 
 ---
 
@@ -506,7 +515,7 @@ Expected: bio set, `Netherlands`, blog `https://glebstarchikov.nl`. Manually con
 - [ ] **Step 2: Keeper parity table**
 
 ```bash
-for r in design Launchpad codex-check noter rag-workshop claude-widget good-eye; do
+for r in design Launchpad codex-check rusty-noter rag-workshop claude-widget good-eye; do
   gh repo view glebstarchikov/$r --json name,description,homepageUrl,licenseInfo,repositoryTopics,hasIssuesEnabled,hasWikiEnabled \
     --jq '"\(.name)\tdesc:\(.description|length>0)\thome:\(.homepageUrl|length>0)\tlic:\(.licenseInfo.key)\ttopics:\(.repositoryTopics|length)\tissues:\(.hasIssuesEnabled)\twiki:\(.hasWikiEnabled)"'
 done
@@ -519,19 +528,19 @@ Expected: every row shows `desc:true home:true lic:mit topics:>=1 issues:true wi
 gh repo list glebstarchikov --limit 100 --json name,isPrivate,isArchived \
   --jq 'sort_by(.name)[] | "\(.name)\tprivate=\(.isPrivate)\tarchived=\(.isArchived)"'
 ```
-Expected: `claude-widget`/`good-eye`/`personal-website` public; `personal-website` + the 3 throwaways archived; the 6 stay-private repos still `private=true`; `nova-for-b` untouched.
+Expected: `claude-widget`/`good-eye`/`personal-website`/`rusty-noter` public; `personal-website` + `noter` + the 3 throwaways archived; the 7 stay-private repos (`glebstarchikov.nl`, `coffee-site`, `a-hotel`, `tambov-cheese-craft`, `gustaf`, `gustaf-grand-network`, `gustaf-dashboard`) still `private=true`; `nova-for-b` untouched.
 
 - [ ] **Step 4: Confirm no secrets went public**
 
-Re-run `gitleaks detect` against the now-public `claude-widget`, `good-eye`, `personal-website` one final time.
+Re-run `gitleaks detect` against the now-public `claude-widget`, `good-eye`, `personal-website`, `rusty-noter` one final time.
 Expected: zero leaks (belt-and-suspenders after the Task 1 gate).
 
 ---
 
 ## Self-Review
 
-**Spec coverage:** Profile README + header (Task 3), bio/location/pins (Task 3), keeper README template + metadata baseline + Dependabot + features (Task 5), social previews (Tasks 2, 6), make-public gate (Task 1) + flip (Task 4), archive throwaways + personal-website reference (Task 7), verification (Task 8). All spec sections covered.
+**Spec coverage:** Profile README + header (Task 3), bio/location/pins (Task 3), keeper README template + metadata baseline + Dependabot + features (Task 5), social previews (Tasks 2, 6), make-public gate incl. `rusty-noter` (Task 1) + flip (Task 4), archive of throwaways + `personal-website` reference + old `noter` repointed at `rusty-noter` (Task 7), verification (Task 8). All spec sections covered.
 
-**Placeholder scan:** README bodies for `design`, `rag-workshop`, `claude-widget`, `good-eye` are authored at execution time from the repo (Task 5 Step 1–2) because their accurate stack/run details require reading each repo; the template and a per-repo topic/tagline are concrete, so this is a sourcing step, not a vague placeholder. Everything else is verbatim.
+**Placeholder scan:** README bodies for `design`, `rag-workshop`, `claude-widget`, `good-eye`, `rusty-noter` are authored at execution time from the repo (Task 5 Step 1–2) because their accurate stack/run details require reading each repo; the template and a per-repo topic/tagline are concrete, so this is a sourcing step, not a vague placeholder. `rusty-noter` gets the strongest README as the flagship. Everything else is verbatim.
 
 **Type/naming consistency:** Keeper list, pin list, topic slugs, and the byte-identical footer line are consistent across Tasks 3, 5, 6, 8. Generator output filenames (`out/header-*.png`, `out/social-<name>.png`) match their consumers in Tasks 3 and 6.

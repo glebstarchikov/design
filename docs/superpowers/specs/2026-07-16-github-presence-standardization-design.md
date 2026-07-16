@@ -25,22 +25,24 @@ over decoration. No badge soup, no stat cards, no rainbow shields.
 
 **Out (this round):**
 - `nova-for-b` — stays active and untouched; Gleb builds it out later.
-- Keeping private: `glebstarchikov.nl` (live site), `coffee-site`,
-  `tambov-cheese-craft`, `gustaf`, `gustaf-grand-network`, `gustaf-dashboard`.
-  Client/brand work and the live site are not open-sourced now.
+- Keeping private: `glebstarchikov.nl` (live site), `coffee-site` (client),
+  `a-hotel` (client, Aseev Hotel Tambov), `tambov-cheese-craft` (client),
+  `gustaf`, `gustaf-grand-network`, `gustaf-dashboard`. Client/brand work and
+  the live site are not open-sourced now.
 - No renames of `Launchpad` (product name) or archived repos.
 
 ## Repo inventory and disposition
 
 | Repo | Current | Disposition |
 |---|---|---|
-| `design` | public, empty README, no license | **Standardize** (keeper) |
-| `Launchpad` | public, good README, MIT, topics | **Standardize** (keeper) |
-| `codex-check` | public, good README, MIT, topics | **Standardize** (keeper) |
-| `noter` | public, ok README, MIT | **Standardize** (keeper) |
-| `rag-workshop` | public, no README, MIT | **Standardize** (keeper) |
-| `claude-widget` | private, Swift, has description | **Make public → standardize** |
-| `good-eye` | private, TS, has description | **Make public → standardize** |
+| `design` | public, empty README, no license | **Standardize + feature** (keeper) |
+| `Launchpad` | public, good README, MIT, topics | **Standardize + feature** (keeper) |
+| `codex-check` | public, good README, MIT, topics | **Standardize** (keeper, not featured) |
+| `rag-workshop` | public, no README, MIT | **Standardize + feature** (keeper) |
+| `rusty-noter` | private, Swift, real app, no README | **Make public → standardize + feature** (flagship) |
+| `claude-widget` | private, Swift, has description | **Make public → standardize + feature** |
+| `good-eye` | private, TS, has description | **Make public → standardize + feature** |
+| `noter` | public, ok README, MIT | **Archive** (superseded by `rusty-noter`) |
 | `personal-website` | private, v1 site | **Make public → archive as reference** |
 | `nova-for-b` | public, empty | **Leave untouched** (WIP) |
 | `pace-pal-for-you` | public, "Trying out Lovable" | **Archive** |
@@ -48,6 +50,7 @@ over decoration. No badge soup, no stat cards, no rainbow shields.
 | `UOL-project` | public, no desc/README | **Archive** |
 | `glebstarchikov.nl` | private | **Stay private** |
 | `coffee-site` | private | **Stay private** (client) |
+| `a-hotel` | private | **Stay private** (client) |
 | `tambov-cheese-craft` | private | **Stay private** (client) |
 | `gustaf` / `-grand-network` / `-dashboard` | private | **Stay private** (brand) |
 
@@ -75,10 +78,10 @@ Restraint over decoration.
 
 - **[design](https://github.com/glebstarchikov/design)** — the unified design system behind everything I ship
 - **[Launchpad](https://github.com/glebstarchikov/Launchpad)** — self-hosted founder command center · Bun · Hono · React · SQLite
-- **[codex-check](https://github.com/glebstarchikov/codex-check)** — Claude Code plugin for automatic second-opinion review
+- **[rusty-noter](https://github.com/glebstarchikov/rusty-noter)** — native macOS notes with a local markdown vault, agent-native
 - **[claude-widget](https://github.com/glebstarchikov/claude-widget)** — the Claude Code critter, living in your Mac menu bar
 - **[good-eye](https://github.com/glebstarchikov/good-eye)** — a searchable design-inspiration database for Claude, via MCP
-- **[noter](https://github.com/glebstarchikov/noter)** — real-time transcription plus AI-structured notes
+- **[rag-workshop](https://github.com/glebstarchikov/rag-workshop)** — a notebook that teaches RAG to non-technical people
 
 ### Elsewhere
 
@@ -116,7 +119,7 @@ crafted element is on-brand; decoration sprinkled everywhere is not.
 ### Profile metadata
 
 - **Bio:** `Founder and solo builder. AI apps, dev tools, and the systems around them.`
-- **Pinned repos (6):** design, Launchpad, codex-check, claude-widget, good-eye, noter.
+- **Pinned repos (6):** design, Launchpad, rusty-noter, claude-widget, good-eye, rag-workshop. (`codex-check` deliberately not pinned; old `noter` archived.)
 - **Location:** `Netherlands`.
 - Blog link already set to `glebstarchikov.nl`.
 
@@ -156,8 +159,9 @@ signature that ties the family together.
 
 ## 3. Consistency baseline ("same things turned on")
 
-Applied identically to all keeper repos (the 5 existing public + the 3 newly
-public once live):
+Applied identically to all 7 keeper repos: `design`, `Launchpad`,
+`codex-check`, `rag-workshop` (existing public) + `claude-widget`, `good-eye`,
+`rusty-noter` (newly public). Old `noter` is archived, not standardized.
 
 | Dimension | Standard |
 |---|---|
@@ -172,8 +176,10 @@ public once live):
 
 ## 4. Make-public procedure (gated)
 
-Applies to `claude-widget`, `good-eye`, `personal-website`. Publishing is
-effectively irreversible (clone/cache/index), so the gate is mandatory.
+Applies to `claude-widget`, `good-eye`, `personal-website`, `rusty-noter`.
+Publishing is effectively irreversible (clone/cache/index), so the gate is
+mandatory. `rusty-noter` is a Swift app in active development, scan its history
+for signing secrets and API keys in particular.
 
 For each repo, in order:
 
@@ -191,9 +197,10 @@ Special case `personal-website` (v1): after publishing, apply an honest
 archived-reference README (v1, retired, superseded by the live Astro site at
 glebstarchikov.nl) and **archive** it (read-only).
 
-## 5. Archive procedure (throwaway)
+## 5. Archive procedure
 
-Applies to `pace-pal-for-you`, `craft-your-signature-online`, `UOL-project`:
+Applies to `pace-pal-for-you`, `craft-your-signature-online`, `UOL-project`,
+and `noter`:
 
 1. Replace README with a single honest line (e.g. "Early experiment.
    Archived."), cross-linking a successor where one exists.
@@ -201,14 +208,18 @@ Applies to `pace-pal-for-you`, `craft-your-signature-online`, `UOL-project`:
 
 No full template, no metadata polish — archived repos are not showcases.
 
+`noter` is a special case: it is a real predecessor, not a throwaway. Keep its
+existing README, repoint its **description** at `rusty-noter` as the successor
+("Previous web version. Succeeded by rusty-noter."), then archive.
+
 ## 6. Execution order
 
-1. Secret-scan the 3 make-public candidates (fail fast before any public change).
-2. Create the profile repo + README + SVG header; set bio and pins.
+1. Secret-scan the 4 make-public candidates (fail fast before any public change).
+2. Create the profile repo + README + header; set bio, location, pins.
 3. Flip the clean private repos public.
-4. Apply README template + baseline to all 8 keepers.
+4. Apply README template + baseline to all 7 keepers.
 5. Archive-note + archive the 3 throwaways.
-6. Archive `personal-website` after its reference README.
+6. Archive `personal-website` (reference README) and `noter` (repointed description).
 
 Batch the mechanical `gh` metadata operations (topics, license, homepage,
 feature toggles, Dependabot) so they run consistently across repos.
@@ -232,5 +243,6 @@ feature toggles, Dependabot) so they run consistently across repos.
   shared footer.
 - `gh repo view <repo> --json ...` spot-check confirms metadata parity across
   keepers.
-- The 3 newly public repos are public and passed the secret gate; the 3
-  throwaways and `personal-website` show as archived.
+- The 4 newly public repos (`claude-widget`, `good-eye`, `rusty-noter`,
+  `personal-website`) are public and passed the secret gate; the 3 throwaways,
+  `personal-website`, and old `noter` show as archived.
