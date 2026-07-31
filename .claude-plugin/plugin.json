@@ -1,0 +1,9 @@
+{
+  "name": "design-system",
+  "description": "Crafted Minimal — the unified design system behind everything Gleb ships. Semantic tokens, type and spacing scales, contrast floors, motion character, and a core/theme split.",
+  "version": "1.0.0",
+  "author": { "name": "Gleb Starchikov" },
+  "keywords": ["design-system", "tokens", "css", "tailwind", "accessibility", "contrast"],
+  "license": "MIT",
+  "repository": "https://github.com/glebstarchikov/design"
+}
